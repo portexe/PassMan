@@ -3,30 +3,12 @@
 		<div class="col-md-12"><h1 style="color: white; font-weight: lighter; margin-bottom: 10px; margin-top: 100px;">New Account Entry</h1></div>
 		<div class="form-group col-md-12">
 			<input (keyup.enter)="submitNewAccount()" type="text" placeholder="Account name, ex. Gmail, Facebook, etc." id="accountName" formControlName="accountName" class="form-control" style="width: 100%;">
-			<div *ngIf="newAccountForm.controls['accountName'].errors &&
-				newAccountForm.controls['accountName'].touched &&
-				newAccountForm.controls['accountName'].errors.required"
-				class="alert alert-danger">
-				Account Name is required.
-			</div>
 		</div>
 		<div class="form-group col-md-12">
 			<input (keyup.enter)="submitNewAccount()" type="password" placeholder="Enter password" id="password" formControlName="password" class="form-control" style="width: 100%;">
-			<div *ngIf="newAccountForm.controls['password'].errors &&
-				newAccountForm.controls['password'].touched &&
-				newAccountForm.controls['password'].errors.required"
-				class="alert alert-danger">
-				Password is required.
-			</div>
 		</div>
 		<div class="form-group col-md-12">
 			<input (keyup.enter)="submitNewAccount()" type="password" placeholder="Verify password" id="verifyPassword" formControlName="verifyPassword" class="form-control" style="width: 100%;">
-			<div *ngIf="newAccountForm.controls['verifyPassword'].errors &&
-				newAccountForm.controls['verifyPassword'].touched &&
-				newAccountForm.controls['verifyPassword'].errors.required"
-				class="alert alert-danger">
-				Password Verification is required.
-			</div>
 		</div>
 	</form>
 	<div class="form-group col-md-12">
