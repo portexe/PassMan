@@ -1,4 +1,4 @@
-<div id="accountListHeader">
+<div *ngIf="!addingNewAccount && !isEditingAccount()" id="accountListHeader">
     <button id="newAccountButton" (click)="addAccountClick()" class="btn btn-info action"><i class="fa fa-plus"></i>Add Account</button>
 </div>
 <span *ngIf="!addingNewAccount && !isEditingAccount()">

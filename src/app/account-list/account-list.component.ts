@@ -56,7 +56,6 @@ export class AccountListComponent implements OnInit, OnDestroy {
 			try {
 				this.chosenAccount = account;
 				this.viewPW = res;
-				//window.alert(res);
 			} catch (e) {
 				console.log(e);
 			}

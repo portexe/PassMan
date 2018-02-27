@@ -1,52 +1,37 @@
 <div id="container" class="col-8 offset-2">
 	<div style="margin-bottom: 20px; display: block; margin-top: 100px;">
 		<form [formGroup]="newUserForm" (ngSubmit)="submitNewUser()">
-			<div class="col-md-12"><h1 style="color: white; font-weight: lighter; margin-bottom: 10px;">Create New User</h1></div>
-			<div class="form-group col-md-12">
-				<input type="text" placeholder="Username" id="username" formControlName="username" class="form-control" style="width: 100%;">
-				<div *ngIf="newUserForm.controls['username'].errors && 
-		            newUserForm.controls['username'].touched && 
-		            newUserForm.controls['username'].errors.required"
-		            class="alert alert-danger">
-		            Username is required.
-		        </div>
-			</div>
-
-			<div class="form-group col-md-12">
-				<input type="password" placeholder="Enter password" id="password" formControlName="password" class="form-control" style="width: 100%;">
-				<div *ngIf="newUserForm.controls['password'].errors && 
-		            newUserForm.controls['password'].touched && 
-		            newUserForm.controls['password'].errors.required"
-		            class="alert alert-danger">
-		            Password is required.
-		        </div>
-			</div>
-
-			<div class="form-group col-md-12">
-				<input type="password" placeholder="Enter password" id="verifyPassword" formControlName="verifyPassword" class="form-control" style="width: 100%;">
-				<div *ngIf="newUserForm.controls['verifyPassword'].errors && 
-		            newUserForm.controls['verifyPassword'].touched && 
-		            newUserForm.controls['verifyPassword'].errors.required"
-		            class="alert alert-danger">
-		            Password Verification is required.
-		        </div>
+			<div class="col-md-12">
+				<h1 style="color: white; font-weight: lighter;">Create New User</h1>
+				<p style="color: white; text-align: left; font-weight: ligter; font-size: 10px; margin-bottom: 10px;">Create a master password. You will need to remember this and keep it in a safe place.</p>
 			</div>
 			<div class="form-group col-md-12">
-				<button (click)="submitNewUser()" class="btn btn-info" style="float: right;">Submit</button>
-				<button (click)="cancelNewUser()" class="btn btn-secondary" style="float: right; margin-right: 10px;">Cancel</button>
+				<input (keyup.enter)="submitNewUser()" type="text" placeholder="Username" id="username" formControlName="username" class="form-control" style="width: 100%;">
+			</div>
+			<div class="form-group col-md-12">
+				<input (keyup.enter)="submitNewUser()" type="password" placeholder="Enter password" id="password" formControlName="password" class="form-control" style="width: 100%;">
+			</div>
+			<div class="form-group col-md-12">
+				<input (keyup.enter)="submitNewUser()" type="password" placeholder="Verify password" id="verifyPassword" formControlName="verifyPassword" class="form-control" style="width: 100%;">
 			</div>
 		</form>
+		<div class="form-group col-md-12">
+			<button (click)="submitNewUser()" class="btn btn-info" style="float: right;">Submit</button>
+			<button (click)="cancelNewUser()" class="btn btn-secondary" style="float: right; margin-right: 10px;">Cancel</button>
+		</div>
 	</div>
 	<br>
-	<div style="margin-top: 20px;" class="col-md-12" *ngIf="warningMessage && warningMessage !== ''">
-		<h3 style="color: white;">{{warningMessage}}</h3>
-		<p style="color: white; text-align: left;">Create a master password. You will need to remember this and keep it in a safe place. Complexity requirements are as follows:</p>
-		<ol style="color: white;">
-			<li>Must be at least 10 characters long.</li>
-			<li>Must contain at least one symbol.</li>
-			<li>Must contain at least one number.</li>
-			<li>Must contain at least one uppercase letter.</li>
-			<li>Must contain at least one lowercase letter.</li>
-		</ol>
+	<div style="margin-top: 20px;" class="col-md-12">
+		<h3 style="color: white;" *ngIf="warningMessage && warningMessage !== ''">{{warningMessage}}</h3>
+		<p (click)="showPassReqs()" style="color: white; text-align: left; font-size: 12px; cursor: pointer;"><u>Password Requirements</u></p>
+		<span *ngIf="passReqsVisible">
+			<ol style="color: white;">
+				<li>Must be at least 10 characters long.</li>
+				<li>Must contain at least one symbol.</li>
+				<li>Must contain at least one number.</li>
+				<li>Must contain at least one uppercase letter.</li>
+				<li>Must contain at least one lowercase letter.</li>
+			</ol>
+		</span>
 	</div>
 </div>

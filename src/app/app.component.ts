@@ -92,6 +92,7 @@ export class AppComponent implements OnInit {
 		this.checkUsername();
 	}
 	logInAsDifferentUserClick() {
+		console.log('uhhhhhhhhh');
 		this.lastLoggedInUser = 'none';
 		// this._passManSvc.signOut();
 		this._passManSvc.resetLastUser();
