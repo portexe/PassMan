@@ -17,7 +17,7 @@ function createWindow () {
 
     win.loadURL(`file://${__dirname}/dist/index.html`)
     //win.loadURL('http://localhost:5000');
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
     win.on('closed', function() {
       win = null;
       subpy.kill('SIGINT');

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { PassManService } from '../passman.service';
 import 'rxjs/add/operator/map';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
 	selector: 'app-edit-account',
@@ -16,9 +17,16 @@ export class EditAccountComponent implements OnInit {
 	localServerUrl: string;
 	warningMessage: string;
 	@Input() accountName: string;
+	editAccountForm: FormGroup;
 
 	constructor(private _http: Http,
-		private _passManSvc: PassManService) { }
+		private _passManSvc: PassManService,
+		private _fb: FormBuilder) {
+		this.editAccountForm = this._fb.group({
+			password: ['', Validators.required],
+			verifyPassword: ['', Validators.required]
+		});
+	}
 
 	ngOnInit() {
 		this.localServerUrl = this._passManSvc.getLocalServerUrl();
@@ -28,28 +36,50 @@ export class EditAccountComponent implements OnInit {
 		});
 	}
 	submitNewPassword() {
-		// An edit will be deleting the old row and replacing it with a new one.
-		if (this._passManSvc.verifyPassword(this.newAccountPassword, this.verifyNewAccountPassword)) {
-			this._http.post(`${this.localServerUrl}/deleteAccount`, {
-				'username': this.username,
-				'account': this.accountName
-			}).map(res => res.json()).subscribe(res => {
-				try {
-					this._http.post(`${this.localServerUrl}/addAccount`, {
-						'username': this.username,
-						'password': this.newAccountPassword,
-						'account': this.accountName
-					}).map(res => res.json()).subscribe(res => {
-						this._passManSvc.getAccountsList();
-						this._passManSvc.setWarningMessage('');
-						this._passManSvc.doneEditingAccount();
+		var formValid: boolean = true;
+		if (!this.editAccountForm.controls['verifyPassword'].value ||
+			this.editAccountForm.controls['verifyPassword'].value === undefined ||
+			this.editAccountForm.controls['verifyPassword'].value === '') {
+			this._passManSvc.setWarningMessage('Verify Password field is empty.');
+			formValid = false;
+		}
+		if (!this.editAccountForm.controls['password'].value ||
+			this.editAccountForm.controls['password'].value === undefined ||
+			this.editAccountForm.controls['password'].value === '') {
+			this._passManSvc.setWarningMessage('Password field is empty.');
+			formValid = false;
+		}
+
+		var passwordsMatch: boolean = this.editAccountForm.controls['password'].value === this.editAccountForm.controls['verifyPassword'].value;
+		var editAccountObject = {
+			'username': this.username,
+			'account': this.accountName,
+			'password': this.editAccountForm.controls['password'].value
+		};
+		var deleteAccountObject = {
+			'username': this.username,
+			'account': this.accountName,
+		}
+		if (formValid) {
+			try {
+				if (passwordsMatch) {
+					this._http.post(`${this.localServerUrl}/deleteAccount`, deleteAccountObject).map(res => res.json()).subscribe(res => {
+						try {
+							this._http.post(`${this.localServerUrl}/addAccount`, editAccountObject).map(res => res.json()).subscribe(res => {
+								this._passManSvc.getAccountsList();
+								this._passManSvc.setWarningMessage('');
+								this._passManSvc.doneEditingAccount();
+							});
+						} catch (e) {
+							console.log(e);
+						}
 					});
-				} catch (e) {
-					console.log(e);
+				} else {
+					this._passManSvc.setWarningMessage('Passwords don\'t match.');
 				}
-			});
-		} else {
-			this._passManSvc.setWarningMessage('Passwords don\'t match.');
+			} catch (e) {
+
+			}
 		}
 	}
 	cancel() {
