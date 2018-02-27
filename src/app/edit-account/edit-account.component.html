@@ -1,0 +1,6 @@
+<p>{{accountName}}</p>
+<input [(ngModel)]="newAccountPassword" type="password" placeholder="New password">
+<input [(ngModel)]="verifyNewAccountPassword" type="password" placeholder="Verify password">
+<button (click)="submitNewPassword()">Submit</button>
+<button (click)="cancel()">Cancel</button>
+<h3 *ngIf="warningMessage !== ''">{{warningMessage}}</h3>

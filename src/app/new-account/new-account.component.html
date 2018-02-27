@@ -1,0 +1,6 @@
+<input [(ngModel)]="accountName" type="text" placeholder="Account name, ex. Gmail, Facebook, etc.">
+<input [(ngModel)]="accountPassword" type="text" placeholder="Password">
+<input [(ngModel)]="verifyAccountPassword" type="text" placeholder="Verify password">
+<button (click)="submitNewAccount()">Submit</button>
+<button (click)="cancel()">Cancel</button>
+<h3 *ngIf="warningMessage !== ''">{{warningMessage}}</h3>

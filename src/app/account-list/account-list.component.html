@@ -1,0 +1,26 @@
+<div id="accountListHeader">
+    <button id="newAccountButton" (click)="addAccountClick()" class="btn btn-info action"><i class="fa fa-plus"></i>Add Account</button>
+</div>
+<span *ngIf="!addingNewAccount && !isEditingAccount()">
+    <span style="display: block;">
+        <table cellpadding="10" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th scope="colgroup">Available Accounts</th>
+                </tr>
+            </thead>
+            <tr style="width: 100%;" *ngFor="let account of accounts">
+                <td style="width: 35%;">{{account}}</td>
+                <td style="width: 50%; margin-left: 10px; font-size: 18px; text-align: right;"><span *ngIf="isChosenAccount(account)">{{viewPW}}<span class="action" style="margin-left: 10px; font-size: 12px;" (click)="stopViewingPassword()">hide</span></span></td>
+                <td style="width: 5%;"><i (click)="viewPasswordForAccount(account)" class="fa fa-eye action"></i></td>
+                <td style="width: 5%;"><i (click)="editAccount(account)" class="fa fa-edit action"></i></td>
+                <td style="width: 5%;"><i (click)="deleteAccount(account)" class="fa fa-trash action"></i></td>
+        </table>
+    </span>
+</span>
+<div *ngIf="addingNewAccount" class="addNewAccount">
+    <app-new-account></app-new-account>
+</div>
+<div *ngIf="isEditingAccount()">
+    <app-edit-account [accountName]="editingWhichAccount"></app-edit-account>
+</div>

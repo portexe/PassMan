@@ -1,0 +1,32 @@
+.action:hover {
+	cursor: pointer;
+}
+#newAccountButton{
+	float: right;
+	margin-right: 10px;
+}
+#signOut {
+	font-size: 12px;
+	display: inline;
+	color: white;
+}
+#username {
+	display: inline;
+	color: white;
+	font-size: 16px;
+}
+#usernameHead {
+	float: right;
+}
+.dropdown-toggle:after {
+	display: none;
+}
+.fa-caret-down {
+	margin-left: .5rem;
+}
+.logout-dropdown {
+	padding: 0;
+	width: 106px;
+	min-width: 0;
+	cursor: pointer;
+}

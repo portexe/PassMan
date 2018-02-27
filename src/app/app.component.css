@@ -1,0 +1,20 @@
+input {
+	outline: none;
+	text-align: center;
+}
+tr{
+	border-bottom: 1px solid black;
+}
+
+h1{
+	/*text-shadow: 2px 2px #392CE1;*/
+	color: white;
+}
+p{
+	
+}
+.action:hover {
+	cursor: pointer;
+	color: white;
+}
+

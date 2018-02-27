@@ -1,0 +1,38 @@
+<div style="width: 100%; height: 35px;  margin-bottom: 10px;">
+    <h1 style="font-family: serif; font-size: 30px; text-shadow: none; display: inline; margin-top: 5px; margin-left: 5px;">{{ title }}</h1>
+    <h1 *ngIf="username && passwordConfirmed" style="font-family: arial; font-size: 16px; text-shadow: none; display: inline; float: right; margin-top: 7px; margin-right: 5px;">{{ username }}<i (click)="signOut()" style="color: white; margin-left: 15px;" class="fa fa-sign-out action"></i>
+</h1>
+</div>
+<div style="color: white;" *ngIf="!creatingUser">
+    <div *ngIf="!passwordConfirmed" style="text-align: center;" class="login">
+        <div style="margin-top: 165px;" *ngIf="!usernameConfirmed && lastLoggedInUser !== 'none'">
+            <h1 style="font-weight: lighter;">{{lastLoggedInUser}}</h1>
+            <button class="btn btn-info" style="margin-bottom: 10px;" (click)="quickLogin()">Log In</button>
+            <h6 style="display: inline;" style="text-align: center; font-size: 10px;">Not you?</h6><h6 (click)="logInAsDifferentUserClick()" class="action" style="display: inline; color: white; font-size: 8px;"><u>Log in as different user</u></h6>
+        </div>
+        <div style="margin-top: 165px;" *ngIf="!usernameConfirmed && lastLoggedInUser === 'none'">
+            <h1 style="text-align: center; font-weight: lighter;">Enter Your Username</h1>
+            <input autofocus (keyup.enter)="checkUsername()" [(ngModel)]="username" style="width: 300px;  border-radius: 10px; margin-bottom: 10px;" type="text">
+            <br>
+            <button class="btn btn-info" style="margin-bottom: 10px;" (click)="checkUsername()">Check Username</button>
+        </div>
+        <div style="margin-top: 165px;" *ngIf="usernameConfirmed">
+            <h1 style="text-align: center; font-weight: lighter;">Enter Your Master Password</h1>
+            <input #passwordField id="passwordField" (keyup.enter)="checkMasterPassword()" [(ngModel)]="password" style="width: 300px;  border-radius: 10px; margin-bottom: 10px;" type="password">
+            <br>
+            <button class="btn btn-info" style="margin-bottom: 10px;" (click)="checkMasterPassword()">Log In</button>
+            <h6 class="action" (click)="logInAsDifferentUserClick()" style="display: inline;" style="text-align: center; font-size: 10px;"><u>Login-In As Different User</u></h6>
+        </div>
+        <span *ngIf="lastLoggedInUser === 'none' && !usernameConfirmed">
+            <h6 style="display: inline;" style="text-align: center; font-size: 10px;">Dont have an account yet?</h6><h6 (click)="createNewUser()" class="action" style="display: inline; color: white; font-size: 8px;"><u>Create one</u></h6>
+        </span>
+        <h3 *ngIf="warningMessage !== ''">{{warningMessage}}</h3>
+    </div>
+
+    <div *ngIf="passwordConfirmed" style="font-size: 24px;" class="mainMenu">
+        <app-account-list></app-account-list>
+    </div>
+</div>
+<div *ngIf="creatingUser">
+    <app-new-user></app-new-user>
+</div>
