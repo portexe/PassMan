@@ -3,12 +3,8 @@
 </div>
 <span *ngIf="!addingNewAccount && !isEditingAccount()">
     <span style="display: block;">
-        <table cellpadding="10" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th scope="colgroup">Available Accounts</th>
-                </tr>
-            </thead>
+        <h1 style="font-weight: lighter; margin-left: 13px;">Available Accounts</h1>
+        <table class="table table-hover table-striped" cellpadding="10" style="width: 100%;">
             <tr style="width: 100%;" *ngFor="let account of accounts">
                 <td style="width: 35%;">{{account}}</td>
                 <td style="width: 50%; margin-left: 10px; font-size: 18px; text-align: right;"><span *ngIf="isChosenAccount(account)">{{viewPW}}<span class="action" style="margin-left: 10px; font-size: 12px;" (click)="stopViewingPassword()">hide</span></span></td>

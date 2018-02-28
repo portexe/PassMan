@@ -10,7 +10,7 @@ function createWindow () {
     width: 1000, 
     height: 600,
     backgroundColor: '#043564',
-    icon: `file://${__dirname}/dist/assets/logo.png`,
+    icon: `file://${__dirname}/assets/icons/png/64x64.png`,
     resizable: false
   })
 

@@ -30,3 +30,9 @@
 	min-width: 0;
 	cursor: pointer;
 }
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #07417A;
+}
+.table-striped > tbody > tr:nth-child(2n+1):hover > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #033363;
+}

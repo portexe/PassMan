@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { PassManService } from '../passman.service';
 import 'rxjs/add/operator/map';
@@ -6,7 +6,8 @@ import 'rxjs/add/operator/map';
 @Component({
 	selector: 'app-account-list',
 	templateUrl: './account-list.component.html',
-	styleUrls: ['./account-list.component.css']
+	styleUrls: ['./account-list.component.css'],
+	encapsulation: ViewEncapsulation.None
 })
 export class AccountListComponent implements OnInit, OnDestroy {
 
