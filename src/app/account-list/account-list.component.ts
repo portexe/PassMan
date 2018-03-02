@@ -92,7 +92,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
 			return true;
 	}
 	deleteAccount(account: string) {
-		var confirmation = confirm(`Are you sure you want to delete ${account}?`);
+		var confirmation = confirm(`Are you sure you want to delete ${account[0]}?`);
 		if (confirmation === true) {
 			this._http.post(`${this.localServerUrl}/deleteAccount`, { 'username': this.username, 'account': account }).map(res => res.json()).subscribe(res => {
 				try {

@@ -7,7 +7,7 @@ var subpy;
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1000, 
+    width: 1100, 
     height: 600,
     backgroundColor: '#043564',
     icon: `file://${__dirname}/assets/icons/png/64x64.png`,
