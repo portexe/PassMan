@@ -62,8 +62,9 @@ class PassManAddAccount(Resource):
         parser.add_argument('username')
         parser.add_argument('account')
         parser.add_argument('password')
+        parser.add_argument('accountUsername')
         args = parser.parse_args()
-        return add_new_account(args['username'], args['account'], args['password'])
+        return add_new_account(args['username'], args['account'], args['password'], args['accountUsername'])
 
 class PassManDeleteAccount(Resource):
     def post(self):
@@ -137,14 +138,17 @@ def create_master_table():
     conn.commit()
 
 def create_pw_table_for_user(username):
-    c.execute("CREATE TABLE IF NOT EXISTS [" + username + "PW](account TEXT UNIQUE, password TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS [" + username + "PW](account TEXT UNIQUE, accountUsername TEXT, password TEXT)")
     conn.commit()
 
 def get_account_list(username):
     c.execute("SELECT * FROM [" + username + "PW]")
     accounts = []
     for row in c.fetchall():
-        accounts.append(row[0])
+        sub_arr = []
+        sub_arr.append(row[0])
+        sub_arr.append(row[1])
+        accounts.append(sub_arr)
     return accounts
 
 def delete_account(username, account):
@@ -183,7 +187,7 @@ def decrypt_password(encryption_string):
     aes_decryption_object = AES.new(decrypt_random_key, AES.MODE_CBC, aes_salt)
     return aes_decryption_object.decrypt(password)
 
-def add_new_account(username, account, password):
+def add_new_account(username, account, password, account_username):
     try:
         encryption_information = encrypt_password(password)
         encrypted_password = encryption_information[0]
@@ -191,7 +195,7 @@ def add_new_account(username, account, password):
         encryption_aes_salt = encryption_information[2]
         encryption_string = encrypted_password + SEPARATOR + encryption_random_key + SEPARATOR + encryption_aes_salt
         encryption_string = unicode(encryption_string, "latin-1")
-        c.execute("INSERT INTO [" + username + "PW] VALUES(?, ?)", (account, encryption_string))
+        c.execute("INSERT INTO [" + username + "PW] VALUES(?, ?, ?)", (account, account_username, encryption_string))
         conn.commit()
         create_pw_table_for_user(username)
         return True
@@ -271,6 +275,7 @@ def init():
     global c
     conn = sqlite3.connect('pw.db')
     c = conn.cursor()
+    create_master_table()
     MASTER_PASSWORD = ''
     init_last_logged_in()
 

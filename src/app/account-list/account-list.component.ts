@@ -15,7 +15,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
 	viewPW: string = '';
 	chosenAccount: string;
 	localServerUrl: string;
-	accounts: string[] = [];
+	accounts: any;
 	editingWhichAccount: string = '';
 	addingNewAccount: boolean = false;
 
@@ -51,6 +51,11 @@ export class AccountListComponent implements OnInit, OnDestroy {
 		this.accounts = [];
 		this.editingWhichAccount = '';
 		this.addingNewAccount = false;
+	}
+	accountUsernameExists(username) {
+		if(!username || username === '' || username === undefined)
+			return false;
+		return true;
 	}
 	viewPasswordForAccount(account: string) {
 		this._http.post(`${this.localServerUrl}/menu`, { 'username': this.username, 'account': account }).map(res => res.json()).subscribe(res => {

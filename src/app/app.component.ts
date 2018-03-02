@@ -92,9 +92,7 @@ export class AppComponent implements OnInit {
 		this.checkUsername();
 	}
 	logInAsDifferentUserClick() {
-		console.log('uhhhhhhhhh');
 		this.lastLoggedInUser = 'none';
-		// this._passManSvc.signOut();
 		this._passManSvc.resetLastUser();
 		this.usernameConfirmed = false;
 		this.passwordConfirmed = false;
@@ -105,5 +103,6 @@ export class AppComponent implements OnInit {
 	}
 	signOut () {
 		this._passManSvc.signOut();
+		// @B$01uUt$3cur3
 	}
 }

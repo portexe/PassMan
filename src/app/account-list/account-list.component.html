@@ -5,9 +5,18 @@
     <span style="display: block;">
         <h1 style="font-weight: lighter; margin-left: 13px;">Available Accounts</h1>
         <table class="table table-hover table-striped" cellpadding="10" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th colspan="1">Account</th>
+                    <th colspan="2">Username</th>
+                    <th colspan="3">Controls</th>
+                </tr>
+            </thead>
             <tr style="width: 100%;" *ngFor="let account of accounts">
-                <td style="width: 35%;">{{account}}</td>
-                <td style="width: 50%; margin-left: 10px; font-size: 18px; text-align: right;"><span *ngIf="isChosenAccount(account)">{{viewPW}}<span class="action" style="margin-left: 10px; font-size: 12px;" (click)="stopViewingPassword()">hide</span></span></td>
+                <td style="width: 28%; font-weight: lighter;">{{ account[0] }}</td>
+                <td *ngIf="accountUsernameExists(account[1])" style="width: 28%; font-weight: lighter;">{{ account[1] }}</td>
+                <td *ngIf="!accountUsernameExists(account[1])" style="width: 28%; font-weight: lighter;">N/A</td>
+                <td style="width: 28%; margin-left: 10px; font-size: 18px; text-align: right;"><span *ngIf="isChosenAccount(account)">{{viewPW}}<span class="action" style="margin-left: 10px; font-size: 12px;" (click)="stopViewingPassword()">hide</span></span></td>
                 <td style="width: 5%;"><i (click)="viewPasswordForAccount(account)" class="fa fa-eye action"></i></td>
                 <td style="width: 5%;"><i (click)="editAccount(account)" class="fa fa-edit action"></i></td>
                 <td style="width: 5%;"><i (click)="deleteAccount(account)" class="fa fa-trash action"></i></td>

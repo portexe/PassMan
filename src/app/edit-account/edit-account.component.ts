@@ -24,6 +24,7 @@ export class EditAccountComponent implements OnInit {
 		private _fb: FormBuilder) {
 		this.editAccountForm = this._fb.group({
 			password: ['', Validators.required],
+			accountUsername: ['', Validators.required],
 			verifyPassword: ['', Validators.required]
 		});
 	}
@@ -34,6 +35,7 @@ export class EditAccountComponent implements OnInit {
 		this._passManSvc.subscribeToWarningMessages().subscribe(res => {
 			this.warningMessage = res;
 		});
+		this.editAccountForm.controls['accountUsername'].setValue(this.accountName[1]);
 	}
 	submitNewPassword() {
 		var formValid: boolean = true;
@@ -49,11 +51,16 @@ export class EditAccountComponent implements OnInit {
 			this._passManSvc.setWarningMessage('Password field is empty.');
 			formValid = false;
 		}
-
+		if (!this.editAccountForm.controls['accountUsername'].value ||
+			this.editAccountForm.controls['accountUsername'].value === undefined ||
+			this.editAccountForm.controls['accountUsername'].value === '') {
+			this.editAccountForm.controls['accountUsername'].setValue('N/A');
+		}
 		var passwordsMatch: boolean = this.editAccountForm.controls['password'].value === this.editAccountForm.controls['verifyPassword'].value;
 		var editAccountObject = {
 			'username': this.username,
-			'account': this.accountName,
+			'account': this.accountName[0],
+			'accountUsername': this.editAccountForm.controls['accountUsername'].value,
 			'password': this.editAccountForm.controls['password'].value
 		};
 		var deleteAccountObject = {

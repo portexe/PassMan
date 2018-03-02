@@ -21,6 +21,7 @@ export class NewAccountComponent implements OnInit {
 		private _fb: FormBuilder) {
 		this.newAccountForm = this._fb.group({
 			accountName: ['', Validators.required],
+			accountUsername: ['', Validators.required],
 			password: ['', Validators.required],
 			verifyPassword: ['', Validators.required]
 		});
@@ -47,6 +48,11 @@ export class NewAccountComponent implements OnInit {
 			this._passManSvc.setWarningMessage('Password field is empty.');
 			formValid = false;
 		}
+		if (!this.newAccountForm.controls['accountUsername'].value ||
+			this.newAccountForm.controls['accountUsername'].value === undefined ||
+			this.newAccountForm.controls['accountUsername'].value === '') {
+			this.newAccountForm.controls['accountUsername'].setValue('N/A');
+		}
 		if (!this.newAccountForm.controls['accountName'].value ||
 			this.newAccountForm.controls['accountName'].value === undefined ||
 			this.newAccountForm.controls['accountName'].value === '') {
@@ -57,7 +63,8 @@ export class NewAccountComponent implements OnInit {
 		var newAccountObject = {
 			'username': this.username,
 			'account': this.newAccountForm.controls['accountName'].value,
-			'password': this.newAccountForm.controls['password'].value
+			'password': this.newAccountForm.controls['password'].value,
+			'accountUsername': this.newAccountForm.controls['accountUsername'].value
 		};
 		if (formValid) {
 			try {
